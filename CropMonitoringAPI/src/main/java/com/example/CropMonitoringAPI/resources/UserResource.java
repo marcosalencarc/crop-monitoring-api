@@ -2,6 +2,8 @@ package com.example.CropMonitoringAPI.resources;
 
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.CropMonitoringAPI.DAO.StationDAO;
 import com.example.CropMonitoringAPI.DAO.UserDAO;
 import com.example.CropMonitoringAPI.models.*;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -21,15 +24,17 @@ import io.swagger.annotations.ApiOperation;
 
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/cropMonitoringApi")
 @Api(value="API Rest produtos")
 @CrossOrigin(origins="*")
 public class UserResource {
 
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	StationDAO stationDAO;
 	
-	@GetMapping("/users")
+	@GetMapping("/user/get")
 	@ApiOperation(value="Retorna a lista de usuário do sistema")
 	public List<User> listUsers(){
 		return userDAO.findAll();
@@ -41,18 +46,19 @@ public class UserResource {
 	public User getUser(@PathVariable(value="id") long id){
 		return userDAO.findById(id);
 	}
-	@GetMapping("/user/getU/{id}")
-	@ApiOperation(value="Retorna um usuário")
-	public User getUserStation(@PathVariable(value="id") long id){
-		User u = userDAO.userWithStations(id);
-	//	.getStations();
-		return u;
-	}
-	
+
 	@PostMapping("/user/post")
 	@ApiOperation(value="Salva um usuário")
 	public User saveUser(@RequestBody User user) {
-		return userDAO.save(user);
+		
+		User u = userDAO.save(user);
+		if(user.getStations()!=null && !user.getStations().isEmpty()) {
+			for(Station s: user.getStations()) {
+				s.setUser(user);
+				stationDAO.save(s);
+			}
+		}
+		return u;
 	}
 	
 	@PostMapping("/user/postall")
