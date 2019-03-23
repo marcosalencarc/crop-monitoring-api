@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping(value="/cropMonitoringApi")
-@Api(value="API Rest produtos")
+@Api(value="API Rest Crop Monitoring")
 @CrossOrigin(origins="*")
 public class UserResource {
 
@@ -47,10 +47,10 @@ public class UserResource {
 		return userDAO.findById(id);
 	}
 
+	
 	@PostMapping("/user/post")
 	@ApiOperation(value="Salva um usuário")
 	public User saveUser(@RequestBody User user) {
-		
 		User u = userDAO.save(user);
 		if(user.getStations()!=null && !user.getStations().isEmpty()) {
 			for(Station s: user.getStations()) {
@@ -60,20 +60,14 @@ public class UserResource {
 		}
 		return u;
 	}
-	
-	@PostMapping("/user/postall")
-	@ApiOperation(value="salva uma lista de usuários")
-	public List<User> saveUsers(@RequestBody List<User> users) {
-		return userDAO.saveAll(users);
-	}
-	
-	@PostMapping("/detete")
+		
+	@PostMapping("/user/delete")
 	@ApiOperation(value="Deleta um usurário")
 	public void deleteUser(@RequestBody User user) {
 		userDAO.delete(user);
 	}
 	
-	@PostMapping("/update")
+	@PostMapping("/user/update")
 	@ApiOperation(value="Atualiza um usuário")
 	public User updateUser(@RequestBody User user) {
 		return userDAO.save(user);

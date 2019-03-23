@@ -3,10 +3,14 @@ package com.example.CropMonitoringAPI.DAO;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.example.CropMonitoringAPI.models.Station;
 
 public interface StationDAO extends JpaRepository<Station, Integer> {
 
-	public List<Station> findByUserId(long id);
+	@Query("Select s from Station s where s.user.id = :id")
+	public List<Station> findByUser(long id);
+	public Station findByIdAndUser(int id, long userId);
+	
 }

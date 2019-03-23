@@ -3,6 +3,7 @@ package com.example.CropMonitoringAPI.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -35,7 +39,8 @@ public class User {
 	@Column
 	private String name;
 	
-	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
+	
+	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY, cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Station> stations;
 
 	public String getLogin() {
