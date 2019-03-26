@@ -15,6 +15,5 @@ public interface StationDAO extends JpaRepository<Station, Integer> {
 	
 	public Station findById(int id);
 	
-	public Station findByIdAndUser(int id, long userId);
 	
 }

@@ -3,7 +3,7 @@ package com.example.CropMonitoringAPI.enums;
 public enum UnityEnum {
 
 	CELCIUS(1,"ºC"),
-	PORCETAGEM(1,"%")
+	PORCETAGEM(2,"%")
 	;
 	
 
@@ -14,6 +14,19 @@ public enum UnityEnum {
 		this.id = id;
 		this.unidade = unidade;
 	}
+	
+	@Override
+	public String toString() {
+		return this.unidade;
+	}
+	
+	public static UnityEnum getById(int id) {
+	    for(UnityEnum u : values()) {
+	        if(u.id == id) return u;
+	    }
+	    return null;
+	}
+
 	
 	
 }

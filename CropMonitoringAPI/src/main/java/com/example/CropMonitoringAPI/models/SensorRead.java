@@ -22,6 +22,9 @@ public class SensorRead {
 	
 	@OneToOne
 	private Sensor sensor;
+	
+	@OneToOne
+	private Station station;
 
 	public long getId() {
 		return id;
@@ -54,6 +57,14 @@ public class SensorRead {
 
 	public void setSensor(Sensor sensor) {
 		this.sensor = sensor;
+	}
+
+	public Station getStation() {
+		return station;
+	}
+
+	public void setStation(Station station) {
+		this.station = station;
 	}
 	
 	

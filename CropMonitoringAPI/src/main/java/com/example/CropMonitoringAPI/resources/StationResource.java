@@ -61,10 +61,10 @@ public class StationResource {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/station/get/{id}", method=RequestMethod.GET)
 	@ApiOperation(value="Retorna uma estação pelo id")
-	public ResponseEntity<?> getUser(@PathVariable(value="id") int id){
+	public ResponseEntity<?> getStation(@PathVariable(value="id") int id){
 		Station s = stationDAO.findById(id);
 		if(s == null) {
-			logger.error("Stação com id {} não encontrada.", id);
+			logger.error("Estação com id {} não encontrada.", id);
             return new ResponseEntity(new CustomErrorType("Estação com id " + id + " não encontrada"), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity(s.toString(), HttpStatus.OK);
@@ -73,7 +73,7 @@ public class StationResource {
 	@SuppressWarnings("unchecked")
 	@PostMapping("/station/post")
 	@ApiOperation(value="Salva uma estação")
-	public ResponseEntity<?> saveUser(@RequestBody StationVO stationVO) {
+	public ResponseEntity<?> saveStation(@RequestBody StationVO stationVO) {
 		//Inserir um nova estação
 		Station station;
 		if(stationVO.getId() == 0) {
@@ -84,11 +84,12 @@ public class StationResource {
 		            return new ResponseEntity(new CustomErrorType("Não foi possivel adicionar a estação, usuário "+ stationVO.getIdUser()+" não encontrado."), HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 				station = new Station(stationVO);
-				station.setUser(new ArrayList<>());
-				station.getUser().add(user);
+				station.setUsers(new ArrayList<>());
+				station.getUsers().add(user);
 				station.setSensors(new ArrayList<Sensor>());
 				user.getStations().add(station);
 				user = userDAO.save(user);
+				station = user.getStations().get(user.getStations().size()-1);
 				return new ResponseEntity(station.toString(), HttpStatus.OK);
 			}catch(Exception e){
 				logger.error("Ocorreu um erro inesperado");
@@ -99,6 +100,11 @@ public class StationResource {
 		else {
 			try {
 				station = stationDAO.findById(stationVO.getId());
+				if(station==null || station.containStation(stationVO.getIdUser())) {
+					logger.error("A estação {} não existe para alterar.",stationVO.getId());
+		            return new ResponseEntity(new CustomErrorType("A estação "+ stationVO.getId()+" não existe para alterar."), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				
 				station.setDescriptionStation(stationVO.getDescription());
 				station = stationDAO.save(station);
 				return new ResponseEntity(station.toString(), HttpStatus.OK);

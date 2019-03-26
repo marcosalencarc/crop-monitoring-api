@@ -104,6 +104,11 @@ public class User {
 	public void setStations(List<Station> stations) {
 		this.stations = stations;
 	}
+	
+	public boolean containStation(int id) {
+		for(Station s: stations) if(s.getId() == id) return true;
+		return false;
+	}
 
 	@Override
 	public String toString() {

@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.example.CropMonitoringAPI.VO.SensorVO;
 import com.example.CropMonitoringAPI.enums.UnityEnum;
 
 @Entity
@@ -18,7 +19,7 @@ public class Sensor {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idSensor;
+	private int id;
 	
 	private String name;
 	
@@ -27,15 +28,23 @@ public class Sensor {
 	
 	private UnityEnum unity;
 	
-	@OneToOne
-	private Station station;
-
-	public int getIdSensor() {
-		return idSensor;
+	public Sensor() {
+		
+	}
+	public Sensor(SensorVO sensorVO) {
+		this.id = sensorVO.getIdSensor();
+		this.name = sensorVO.getName();
+		this.descriptionSensnor = sensorVO.getDescription();
+		this.unity = UnityEnum.getById(sensorVO.getUnity());
+				
+	}
+	
+	public int getId() {
+		return id;
 	}
 
-	public void setIdSensor(int idSensor) {
-		this.idSensor = idSensor;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -61,14 +70,7 @@ public class Sensor {
 	public void setUnity(UnityEnum unity) {
 		this.unity = unity;
 	}
-
-	public Station getStation() {
-		return station;
-	}
-
-	public void setStation(Station station) {
-		this.station = station;
-	}
+	
 	
 	
 }
