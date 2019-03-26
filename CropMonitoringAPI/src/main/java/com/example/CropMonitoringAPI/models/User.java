@@ -10,6 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,6 +21,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.example.CropMonitoringAPI.VO.UserVO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -40,9 +45,25 @@ public class User {
 	private String name;
 	
 	
-	@OneToMany(mappedBy = "user", fetch=FetchType.LAZY, cascade=CascadeType.ALL,orphanRemoval=true)
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="user_has_station", joinColumns=
+		{@JoinColumn(name="user_id")}, inverseJoinColumns=
+		{@JoinColumn(name="station_id")})
 	private List<Station> stations;
 
+	public User() {
+		super();
+	}
+	
+	public User(UserVO userVO) {
+		this();
+		this.id = userVO.getId();
+		this.name = userVO.getName();
+		this.login = userVO.getLogin();
+		this.password = userVO.getPassword();
+	}
+	
 	public String getLogin() {
 		return login;
 	}
@@ -82,6 +103,11 @@ public class User {
 
 	public void setStations(List<Station> stations) {
 		this.stations = stations;
+	}
+
+	@Override
+	public String toString() {
+		return "{\"id:\"" + id + ", \"login\": \"" + login + "\", \"name\": \"" + name + "\"}";
 	}
 
 
