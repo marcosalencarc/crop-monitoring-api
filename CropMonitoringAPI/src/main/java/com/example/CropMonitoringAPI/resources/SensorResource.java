@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.CropMonitoringAPI.DAO.SensorDAO;
 import com.example.CropMonitoringAPI.DAO.StationDAO;
 import com.example.CropMonitoringAPI.VO.SensorVO;
+import com.example.CropMonitoringAPI.enums.UnityEnum;
 import com.example.CropMonitoringAPI.models.Sensor;
 import com.example.CropMonitoringAPI.models.Station;
 import com.example.CropMonitoringAPI.util.CustomErrorType;
@@ -71,70 +72,103 @@ public static final Logger logger = LoggerFactory.getLogger(SensorResource.class
 		//Inserir um novo sensor
 		Sensor sensor;
 		if(sensorVO.getIdSensor() == 0) {
-			if(sensorVO.getIdStation() != 0) {
-				Station station = stationDAO.findById(sensorVO.getIdStation());
-				sensor = new Sensor(sensorVO);
-				station.getSensors().add(sensor);
-				stationDAO.save(station);
-				sensor = station.getSensors().get(station.getSensors().size()-1);
-				return new ResponseEntity(sensor, HttpStatus.OK);
+			try{
+				if(sensorVO.getIdStation() != 0) {
+					Station station = stationDAO.findById(sensorVO.getIdStation());
+					if(station == null) {
+						logger.error("Estação {} não encotrada", sensorVO.getIdStation());
+			            return new ResponseEntity(new CustomErrorType("Estação "+ sensorVO.getIdStation() + " não encontrada: "), HttpStatus.NO_CONTENT);
+					}
+					sensor = new Sensor(sensorVO);
+					station.getSensors().add(sensor);
+					stationDAO.save(station);
+					sensor = station.getSensors().get(station.getSensors().size()-1);
+					return new ResponseEntity(new SensorVO(sensor, station.getId()), HttpStatus.OK);
+				}else {
+					sensor = new Sensor(sensorVO);
+					sensor = sensorDAO.save(sensor);
+					return new ResponseEntity(sensor, HttpStatus.OK);
+				}
+			}catch (Exception e) {
+				logger.error("Ocorreu um erro inesperado");
+	            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado: "+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-//			try {
-//				User user = userDAO.findById(stationVO.getIdUser());
-//				if(user==null) {
-//					logger.error("Não foi possivel adicionar a estação, usuário {} não encontrado.", stationVO.getIdUser());
-//		            return new ResponseEntity(new CustomErrorType("Não foi possivel adicionar a estação, usuário "+ stationVO.getIdUser()+" não encontrado."), HttpStatus.INTERNAL_SERVER_ERROR);
-//				}
-//				station = new Station(stationVO);
-//				station.setUsers(new ArrayList<>());
-//				station.getUsers().add(user);
-//				station.setSensors(new ArrayList<Sensor>());
-//				user.getStations().add(station);
-//				user = userDAO.save(user);
-//				station = user.getStations().get(user.getStations().size()-1);
-//				return new ResponseEntity(station.toString(), HttpStatus.OK);
-//			}catch(Exception e){
-//				logger.error("Ocorreu um erro inesperado");
-//	            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado:"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
 		}
-		//Atuazalizar estação
+		//Atuazalizar sensor ou inserir em uma estação
 		else {
-//			try {
-//				station = stationDAO.findById(stationVO.getId());
-//				if(station==null || station.containStation(stationVO.getIdUser())) {
-//					logger.error("A estação {} não existe para alterar.",stationVO.getId());
-//		            return new ResponseEntity(new CustomErrorType("A estação "+ stationVO.getId()+" não existe para alterar."), HttpStatus.INTERNAL_SERVER_ERROR);
-//				}
-//				
-//				station.setDescriptionStation(stationVO.getDescription());
-//				station = stationDAO.save(station);
-//				return new ResponseEntity(station.toString(), HttpStatus.OK);
-//			}catch (Exception e) {
-//				logger.error("Ocorreu um erro inesperado");
-//	            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado"), HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
+			boolean sensorAlterado=false;
+			try {
+				sensor = sensorDAO.findById(sensorVO.getIdSensor());
+				if(sensor==null) {
+					logger.error("O sensor {} não existe para alterar.",sensorVO.getIdSensor());
+		            return new ResponseEntity(new CustomErrorType("O sensor "+ sensorVO.getIdSensor()+" não existe para alterar."), HttpStatus.NO_CONTENT);
+				}
+				if(!sensorVO.getDescription().equals(sensor.getDescriptionSensnor()) || 
+						!sensorVO.getName().equals(sensor.getName()) || 
+						!UnityEnum.getById(sensorVO.getUnity()).equals(sensor.getUnity())) 
+				{
+					sensorAlterado = true;
+					sensor.setDescriptionSensnor(sensorVO.getDescription());
+					sensor.setName(sensorVO.getName());
+					sensor.setUnity(UnityEnum.getById(sensorVO.getUnity()));
+				}
+				
+				if(sensorAlterado)sensor = sensorDAO.save(sensor);
+				if(sensorVO.getIdStation()!=0) {
+					Station station = stationDAO.findById(sensorVO.getIdStation());
+					if(station == null) {
+						logger.error("Estação {} não encotrada", sensorVO.getIdStation());
+			            return new ResponseEntity(new CustomErrorType("Estação "+ sensorVO.getIdStation() + " não encontrada: "), HttpStatus.NO_CONTENT);
+					}
+					station.getSensors().add(sensor);
+					stationDAO.save(station);
+					sensor = station.getSensors().get(station.getSensors().size()-1);
+					return new ResponseEntity(new SensorVO(sensor, station.getId()), HttpStatus.OK);
+				}
+				return new ResponseEntity(sensor, HttpStatus.OK);
+			}catch (Exception e) {
+				logger.error("Ocorreu um erro inesperado");
+	            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado"), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 			
 		}
-		return null;
 	}
 //	
-//	@RequestMapping(value="/station/delete", method=RequestMethod.POST)
-//	@ApiOperation(value="Deleta uma estação")
-//	public ResponseEntity<?> deleteStation(@RequestBody StationVO stationVO) {
-//		Station station = stationDAO.findById(stationVO.getId());
-//		if(station==null) {
-//			logger.error("Estação não encotrada para a remoção.");
-//			return new ResponseEntity(new CustomErrorType("Estação não encotrada para a remoção."), HttpStatus.NOT_FOUND);
-//		}else {
-//			try {
-//				stationDAO.delete(station);
-//				return new ResponseEntity(station.toString(), HttpStatus.OK);
-//			}catch (Exception e){
-//				logger.error("Estação não encotrada para a remoção.");
-//				return new ResponseEntity(new CustomErrorType("Estação não encotrada para a remoção."), HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//		}
-//	}
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/sensor/delete", method=RequestMethod.POST)
+	@ApiOperation(value="Deleta um sensor")
+	public ResponseEntity<?> deleteStation(@RequestBody SensorVO sensorVO) {
+		Sensor sensor = sensorDAO.findById(sensorVO.getIdSensor());
+		
+		if(sensor==null) {
+			logger.error("Snesor não encotrado para a remoção.");
+			return new ResponseEntity(new CustomErrorType("Sensor não encotrado para a remoção."), HttpStatus.NO_CONTENT);
+		}else {
+			try {
+				if(sensorVO.getIdStation()!=0) {
+					Station station = stationDAO.findById(sensorVO.getIdStation());
+					if(station == null) {
+						logger.error("Estação {} não encotrada", sensorVO.getIdStation());
+			            return new ResponseEntity(new CustomErrorType("Estação "+ sensorVO.getIdStation() + " não encontrada: "), HttpStatus.NO_CONTENT);
+					}
+					if(station.getSensors().contains(sensor)) {
+						station.getSensors().remove(sensor);
+						stationDAO.save(station);
+						return new ResponseEntity(new CustomErrorType("Sensor foi removido da estação "), HttpStatus.OK);
+					}
+					logger.error("Sensor {} não está presente na estação {}", sensorVO.getIdSensor(), sensorVO.getIdStation());
+		            return new ResponseEntity(new CustomErrorType("Sensor "+sensorVO.getIdSensor()+" não está presente na estação "+ sensorVO.getIdStation() + " não encontrada: "), HttpStatus.NO_CONTENT);
+					
+				}else {
+					sensorDAO.delete(sensor);
+					return new ResponseEntity(sensor, HttpStatus.OK);
+				}
+				
+			}catch (Exception e){
+				logger.error("Ocorreu um erro na remoção do sensor.");
+				return new ResponseEntity(new CustomErrorType("Ocorreu um erro na remoção do sensor."), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+	}
 	
 }

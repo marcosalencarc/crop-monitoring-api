@@ -1,0 +1,7 @@
+
+ALTER TABLE public.station_has_sensor DROP CONSTRAINT fk13jpyu7u4lcf91focr5uqhf0s;
+
+ALTER TABLE public.station_has_sensor
+  ADD CONSTRAINT fk13jpyu7u4lcf91focr5uqhf0s FOREIGN KEY (sensor_id)
+      REFERENCES public.tb_sensor (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE;

@@ -38,7 +38,8 @@ public class Station {
 	@ManyToMany(mappedBy="stations", cascade=CascadeType.ALL)
 	private List<User> users;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade =
+        {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinTable(name="station_has_sensor", joinColumns=
 		{@JoinColumn(name="station_id")}, inverseJoinColumns=
 		{@JoinColumn(name="sensor_id")})
@@ -111,6 +112,7 @@ public class Station {
 		result.append("]");
 		return result;
 	}
+	
 	@Override
 	public String toString() {
 		return "{\"id\":" + id + ",\"descriptionStation\":\"" + descriptionStation + "\", \"users\":" + usersStatiton() + ", \"sensors\":"

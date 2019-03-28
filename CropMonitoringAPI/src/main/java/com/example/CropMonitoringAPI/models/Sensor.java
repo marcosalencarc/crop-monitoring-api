@@ -70,6 +70,11 @@ public class Sensor {
 	public void setUnity(UnityEnum unity) {
 		this.unity = unity;
 	}
+	@Override
+	public String toString() {
+		return "{\"id\":" + id + ", \"name\": \"" + name + "\", \"descriptionSensnor\": \"" + descriptionSensnor + "\", \"unity\":\"" + unity+ "\"}";
+	}
+	
 	
 	
 	

@@ -1,5 +1,7 @@
 package com.example.CropMonitoringAPI.VO;
 
+import com.example.CropMonitoringAPI.models.Sensor;
+
 public class SensorVO {
 	
 	private int idSensor;
@@ -8,6 +10,17 @@ public class SensorVO {
 	private int idStation;
 	private int unity;
 	
+	
+	public SensorVO() {
+		
+	}
+	
+	public SensorVO(Sensor sensor, int station) {
+		this.idSensor = sensor.getId();
+		this.description = sensor.getDescriptionSensnor();
+		this.name = sensor.getName();
+		this.idStation = station;
+	}
 	
 	public int getIdSensor() {
 		return idSensor;
