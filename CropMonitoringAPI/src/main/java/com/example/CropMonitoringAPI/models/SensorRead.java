@@ -26,6 +26,22 @@ public class SensorRead {
 	@OneToOne
 	private Station station;
 
+	
+	
+	public SensorRead() {}
+	
+	public SensorRead(double value, Date data, Sensor sensor, Station station) {
+		this(sensor,station);
+		this.value = value;
+		this.data = data;
+		
+	}
+	public SensorRead(Sensor sensor, Station station) {
+		super();
+		this.sensor = sensor;
+		this.station = station;
+	}
+
 	public long getId() {
 		return id;
 	}

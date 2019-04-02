@@ -1,6 +1,7 @@
 package com.example.CropMonitoringAPI.resources;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -50,95 +51,40 @@ public static final Logger logger = LoggerFactory.getLogger(SensorReadResource.c
 	@RequestMapping(value = "/sensorRead/station/{idStation}/sensor/{idSensor}", method = RequestMethod.GET)
 	@ApiOperation(value="Retorna a lista de leituras de um sensor de uma determinada estação")
     public ResponseEntity<?> listAllSensorRead(@PathVariable("idStation") int idStation, @PathVariable("idSensor") int idSensor) {
-		//Station station = stationDAO.findById(idStation);
-		//Sensor  sensor = sensorDAO.findById(idSensor);
-		if(true) {
-			List<SensorRead> sensorReads = sensorReadDAO.findAllBySensorAndStation(idSensor, idStation);
-			if (sensorReads.isEmpty()) {
-				return new ResponseEntity(new CustomErrorType("Nenhuma leitura encontrada"),HttpStatus.NO_CONTENT);
-			}
-			return new ResponseEntity(SensorReadVO.getListVO(sensorReads), HttpStatus.OK);
-			
-		}else {
-			return new ResponseEntity(new CustomErrorType("Parametros inválidas"),HttpStatus.NO_CONTENT);
+		List<SensorRead> sensorReads = sensorReadDAO.findAllBySensorAndStation(idSensor, idStation);
+		if (sensorReads.isEmpty()) {
+			return new ResponseEntity(new CustomErrorType("Nenhuma leitura encontrada"),HttpStatus.NO_CONTENT);
 		}
+		return new ResponseEntity(SensorReadVO.getListVO(sensorReads), HttpStatus.OK);
         
     }
-//	
-//	@SuppressWarnings("unchecked")
-//	@RequestMapping(value="/station/get/{id}", method=RequestMethod.GET)
-//	@ApiOperation(value="Retorna uma estação pelo id")
-//	public ResponseEntity<?> getStation(@PathVariable(value="id") int id){
-//		Station s = stationDAO.findById(id);
-//		if(s == null) {
-//			logger.error("Estação com id {} não encontrada.", id);
-//            return new ResponseEntity(new CustomErrorType("Estação com id " + id + " não encontrada"), HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity(s.toString(), HttpStatus.OK);
-//	}
 //
-//	@SuppressWarnings("unchecked")
-//	@PostMapping("/station/post")
-//	@ApiOperation(value="Salva uma estação")
-//	public ResponseEntity<?> saveStation(@RequestBody StationVO stationVO) {
-//		//Inserir um nova estação
-//		Station station;
-//		if(stationVO.getId() == 0) {
-//			try {
-//				User user = userDAO.findById(stationVO.getIdUser());
-//				if(user==null) {
-//					logger.error("Não foi possivel adicionar a estação, usuário {} não encontrado.", stationVO.getIdUser());
-//		            return new ResponseEntity(new CustomErrorType("Não foi possivel adicionar a estação, usuário "+ stationVO.getIdUser()+" não encontrado."), HttpStatus.INTERNAL_SERVER_ERROR);
-//				}
-//				station = new Station(stationVO);
-//				station.setUsers(new ArrayList<>());
-//				station.getUsers().add(user);
-//				station.setSensors(new ArrayList<Sensor>());
-//				user.getStations().add(station);
-//				user = userDAO.save(user);
-//				station = user.getStations().get(user.getStations().size()-1);
-//				return new ResponseEntity(station.toString(), HttpStatus.OK);
-//			}catch(Exception e){
-//				logger.error("Ocorreu um erro inesperado");
-//	            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado:"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//		}
-//		//Atuazalizar estação
-//		else {
-//			try {
-//				station = stationDAO.findById(stationVO.getId());
-//				if(station==null || station.containStation(stationVO.getIdUser())) {
-//					logger.error("A estação {} não existe para alterar.",stationVO.getId());
-//		            return new ResponseEntity(new CustomErrorType("A estação "+ stationVO.getId()+" não existe para alterar."), HttpStatus.INTERNAL_SERVER_ERROR);
-//				}
-//				
-//				station.setDescriptionStation(stationVO.getDescription());
-//				station = stationDAO.save(station);
-//				return new ResponseEntity(station.toString(), HttpStatus.OK);
-//			}catch (Exception e) {
-//				logger.error("Ocorreu um erro inesperado");
-//	            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado"), HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//			
-//		}
-//	}
+//
+	@SuppressWarnings("unchecked")
+	@PostMapping("/sensorRead/post")
+	@ApiOperation(value="Salva uma lista de leitura")
+	public ResponseEntity<?> saveSensorRead(@RequestBody List<SensorReadVO> sensorReadList) {
+		List<SensorReadVO> response = new ArrayList<>();
+		for(SensorReadVO sensorRead: sensorReadList) {
+			if(sensorRead.getIdSensor() == 0 || sensorRead.getIdStation() == 0) {
+				logger.error("Não foi possivel adicionar a leitura, estação ou sensor não encontrado.");
+	            return new ResponseEntity(new CustomErrorType("Não foi possivel adicionar a leitura, estação ou sensor não encontrado."), HttpStatus.NO_CONTENT);
+			}else {
+				try {
+					Station station = stationDAO.findById(sensorRead.getIdStation());
+					Sensor sensor = sensorDAO.findById(sensorRead.getIdSensor());
+					SensorRead sensorReadSave = new SensorRead(sensorRead.getValue(), new Date(), sensor, station);
+					response.add(new SensorReadVO(sensorReadDAO.save(sensorReadSave)));
+				}catch (Exception e ) {
+					logger.error("Ocorreu um erro inesperado");
+		            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado:"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+		}
+		return new ResponseEntity(response, HttpStatus.OK);
+		
+	}
 //	
-//	@RequestMapping(value="/station/delete", method=RequestMethod.POST)
-//	@ApiOperation(value="Deleta uma estação")
-//	public ResponseEntity<?> deleteStation(@RequestBody StationVO stationVO) {
-//		Station station = stationDAO.findById(stationVO.getId());
-//		if(station==null) {
-//			logger.error("Estação não encotrada para a remoção.");
-//			return new ResponseEntity(new CustomErrorType("Estação não encotrada para a remoção."), HttpStatus.NOT_FOUND);
-//		}else {
-//			try {
-//				stationDAO.delete(station);
-//				return new ResponseEntity(station.toString(), HttpStatus.OK);
-//			}catch (Exception e){
-//				logger.error("Estação não encotrada para a remoção.");
-//				return new ResponseEntity(new CustomErrorType("Estação não encotrada para a remoção."), HttpStatus.INTERNAL_SERVER_ERROR);
-//			}
-//		}
-//	}
+
 	
 }
