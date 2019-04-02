@@ -103,9 +103,9 @@ public static final Logger logger = LoggerFactory.getLogger(SensorResource.class
 					logger.error("O sensor {} não existe para alterar.",sensorVO.getIdSensor());
 		            return new ResponseEntity(new CustomErrorType("O sensor "+ sensorVO.getIdSensor()+" não existe para alterar."), HttpStatus.NO_CONTENT);
 				}
-				if(!sensorVO.getDescription().equals(sensor.getDescriptionSensnor()) || 
-						!sensorVO.getName().equals(sensor.getName()) || 
-						!UnityEnum.getById(sensorVO.getUnity()).equals(sensor.getUnity())) 
+				if((sensorVO.getDescription() != null && !sensorVO.getDescription().equals(sensor.getDescriptionSensnor())) || 
+						(sensorVO.getName() != null && !sensorVO.getName().equals(sensor.getName())) || 
+						(sensorVO.getUnity() != 0 && !UnityEnum.getById(sensorVO.getUnity()).equals(sensor.getUnity()))) 
 				{
 					sensorAlterado = true;
 					sensor.setDescriptionSensnor(sensorVO.getDescription());
