@@ -65,6 +65,11 @@ public static final Logger logger = LoggerFactory.getLogger(SensorReadResource.c
 	@ApiOperation(value="Salva uma lista de leitura")
 	public ResponseEntity<?> saveSensorRead(@RequestBody List<SensorReadVO> sensorReadList) {
 		List<SensorReadVO> response = new ArrayList<>();
+		List<SensorRead> persist = new ArrayList<>();
+		if(sensorReadList.isEmpty()) {
+			logger.error("Sem leituras na requisição");
+            return new ResponseEntity(new CustomErrorType("Sem leituras na requisição"), HttpStatus.NO_CONTENT);
+		}
 		for(SensorReadVO sensorRead: sensorReadList) {
 			if(sensorRead.getIdSensor() == 0 || sensorRead.getIdStation() == 0) {
 				logger.error("Não foi possivel adicionar a leitura, estação ou sensor não encontrado.");
@@ -76,15 +81,17 @@ public static final Logger logger = LoggerFactory.getLogger(SensorReadResource.c
 					SensorRead sensorReadSave = new SensorRead(sensorRead.getValue(), new Date(), sensor, station);
 					if(!sensorReadSave.isValid()) {
 						logger.error("Erro nos valores");
-			            return new ResponseEntity(new CustomErrorType("Valores inválidos ou vazios"), HttpStatus.INTERNAL_SERVER_ERROR);
+			            return new ResponseEntity(new CustomErrorType("Algum dos campos da leitura veio inválido"), HttpStatus.INTERNAL_SERVER_ERROR);
 					}
-					response.add(new SensorReadVO(sensorReadDAO.save(sensorReadSave)));
+					persist.add(sensorReadSave);
 				}catch (Exception e ) {
 					logger.error("Ocorreu um erro inesperado");
 		            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado:"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
 		}
+		persist = sensorReadDAO.saveAll(persist);
+		for(SensorRead s: persist) response.add(new SensorReadVO(s));
 		return new ResponseEntity(response, HttpStatus.OK);
 		
 	}

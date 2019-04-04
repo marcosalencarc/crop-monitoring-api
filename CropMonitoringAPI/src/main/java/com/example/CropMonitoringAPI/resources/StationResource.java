@@ -82,6 +82,9 @@ public class StationResource {
 				if(user==null) {
 					logger.error("Não foi possivel adicionar a estação, usuário {} não encontrado.", stationVO.getIdUser());
 		            return new ResponseEntity(new CustomErrorType("Não foi possivel adicionar a estação, usuário "+ stationVO.getIdUser()+" não encontrado."), HttpStatus.INTERNAL_SERVER_ERROR);
+				}if(stationVO.getDescription() == null || stationVO.getDescription().isEmpty()) {
+					logger.error("Não foi possivel adicionar a estação com a descrição vazia!", stationVO.getIdUser());
+		            return new ResponseEntity(new CustomErrorType("Não foi possivel adicionar a estação com a descrição vazia!"), HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 				station = new Station(stationVO);
 				station.setUsers(new ArrayList<>());
