@@ -74,6 +74,10 @@ public static final Logger logger = LoggerFactory.getLogger(SensorReadResource.c
 					Station station = stationDAO.findById(sensorRead.getIdStation());
 					Sensor sensor = sensorDAO.findById(sensorRead.getIdSensor());
 					SensorRead sensorReadSave = new SensorRead(sensorRead.getValue(), new Date(), sensor, station);
+					if(!sensorReadSave.isValid()) {
+						logger.error("Erro nos valores");
+			            return new ResponseEntity(new CustomErrorType("Valores inválidos ou vazios"), HttpStatus.INTERNAL_SERVER_ERROR);
+					}
 					response.add(new SensorReadVO(sensorReadDAO.save(sensorReadSave)));
 				}catch (Exception e ) {
 					logger.error("Ocorreu um erro inesperado");

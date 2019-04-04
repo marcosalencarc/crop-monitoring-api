@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.example.CropMonitoringAPI.enums.UnityEnum;
+
 @Entity
 @Table(name="TB_SENSOR_READ")
 public class SensorRead {
@@ -83,6 +85,21 @@ public class SensorRead {
 		this.station = station;
 	}
 	
+	public boolean isValid() {
+		if(this.value < 0) return false;
+		if(this.data == null) return false;
+		if(sensor.getUnity().equals(UnityEnum.PORCETAGEM)) {
+			if(this.value < 0 || this.value > 100){
+				return false;
+			}
+		}
+		if(sensor.getUnity().equals(UnityEnum.CELCIUS)) {
+			if(this.value < 0){
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	
 }

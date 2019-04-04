@@ -30,7 +30,7 @@ public class CropMonitoringApiApplicationTests {
 	
 	@Test
 	public void listaSensorReadTest() {
-		ResponseEntity<?> response =  sensorResource.listAllSensorRead(15, 5);
+		ResponseEntity<?> response =  sensorResource.listAllSensorRead(15, 2);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		
 	}
