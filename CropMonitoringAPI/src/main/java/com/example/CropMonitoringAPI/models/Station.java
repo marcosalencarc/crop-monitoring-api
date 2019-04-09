@@ -92,6 +92,7 @@ public class Station {
 		return users;
 	}
 
+
 	public void setUsers(List<User> user) {
 		this.users = user;
 	}

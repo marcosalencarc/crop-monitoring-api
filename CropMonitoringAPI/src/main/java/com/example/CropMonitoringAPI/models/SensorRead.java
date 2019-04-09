@@ -86,7 +86,6 @@ public class SensorRead {
 	}
 	
 	public boolean isValid() {
-		if(this.value < 0) return false;
 		if(this.data == null) return false;
 		if(sensor.getUnity().equals(UnityEnum.PORCETAGEM)) {
 			if(this.value < 0 || this.value > 100){
@@ -94,7 +93,7 @@ public class SensorRead {
 			}
 		}
 		if(sensor.getUnity().equals(UnityEnum.CELCIUS)) {
-			if(this.value < 0){
+			if(this.value < -20 || this.value > 85){
 				return false;
 			}
 		}

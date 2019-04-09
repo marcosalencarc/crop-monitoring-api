@@ -42,6 +42,19 @@ public class CropMonitoringApiApplicationTests {
 		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 	}
 	@Test
+	public void coletaEstacaoInvalidaTest() {
+		//Testar se recupera as leituras da Estação 10 e Sensor 2
+		ResponseEntity<?> response =  sensorResource.listAllSensorRead(10, 2);
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+		
+	}
+	@Test
+	public void coletaSensorInvalidaTest() {
+		//Testar se recupera as leituras da Estação 10 e Sensor 2
+		ResponseEntity<?> response =  sensorResource.listAllSensorRead(-2, 1);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	}
+	@Test
 	public void enviaLeituraTestTest() {
 		//Testar enviar uma leitura com dados válidos
 		//Leitura da estação 1 sensor 1
@@ -57,11 +70,12 @@ public class CropMonitoringApiApplicationTests {
 		leitura.add(mockSensorPrecipitacao);
 		ResponseEntity<?> response =  sensorResource.saveSensorRead(leitura);
 		
-		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 	}
 	
 	@Test
 	public void enviaLeituraDadosInvalidosTest() {
+		//estacao, valor sensor
 		//Testar enviar uma leitura com dados válidos
 		//Leitura do sensor 3 da estação 1
 		SensorReadVO mockSensorTemperatura = new SensorReadVO(1,1,27.0);
@@ -78,5 +92,48 @@ public class CropMonitoringApiApplicationTests {
 		
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 	}
+
+	@Test
+	public void enviaEstacaoInvalidaTest() {
+		//estacao, valor sensor
+		//Testar enviar uma leitura com dados válidos
+		//Leitura do sensor 3 da estação 1
+		SensorReadVO mockSensorTemperatura = new SensorReadVO(1,10,27.0);
+		
+		ArrayList<SensorReadVO> leitura = new ArrayList<>();
+		leitura.add(mockSensorTemperatura);
+		ResponseEntity<?> response =  sensorResource.saveSensorRead(leitura);
+		
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+	}
+	
+	@Test
+	public void enviaSensorInvalidoTest() {
+		//estacao, valor sensor
+		//Testar enviar uma leitura com dados válidos
+		//Leitura do sensor 2 da estação 1
+		SensorReadVO mockSensorUmidade = new SensorReadVO(10,2,100.0);
+		
+		ArrayList<SensorReadVO> leitura = new ArrayList<>();
+		leitura.add(mockSensorUmidade);
+		ResponseEntity<?> response =  sensorResource.saveSensorRead(leitura);
+		
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+	}
+	
+	@Test
+	public void enviaSensorEstacaoInvalidaTest() {
+		//estacao, valor sensor
+		//Testar enviar uma leitura com dados válidos
+		//Leitura do sensor 2 da estação 1
+		SensorReadVO mockSensorUmidade = new SensorReadVO(3,2,100.0);
+		
+		ArrayList<SensorReadVO> leitura = new ArrayList<>();
+		leitura.add(mockSensorUmidade);
+		ResponseEntity<?> response =  sensorResource.saveSensorRead(leitura);
+		
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+	}
+	
 
 }

@@ -51,6 +51,10 @@ public static final Logger logger = LoggerFactory.getLogger(SensorReadResource.c
 	@RequestMapping(value = "/sensorRead/station/{idStation}/sensor/{idSensor}", method = RequestMethod.GET)
 	@ApiOperation(value="Retorna a lista de leituras de um sensor de uma determinada estação")
     public ResponseEntity<?> listAllSensorRead(@PathVariable("idStation") int idStation, @PathVariable("idSensor") int idSensor) {
+		if(idStation <=0 || idSensor<=0) {
+			logger.error("Erro nos valores");
+            return new ResponseEntity(new CustomErrorType("Algum dos campos da leitura veio inválido"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		List<SensorRead> sensorReads = sensorReadDAO.findAllBySensorAndStation(idSensor, idStation);
 		if (sensorReads.isEmpty()) {
 			return new ResponseEntity(new CustomErrorType("Nenhuma leitura encontrada"),HttpStatus.NO_CONTENT);
@@ -78,6 +82,10 @@ public static final Logger logger = LoggerFactory.getLogger(SensorReadResource.c
 				try {
 					Station station = stationDAO.findById(sensorRead.getIdStation());
 					Sensor sensor = sensorDAO.findById(sensorRead.getIdSensor());
+					if(sensorReadDAO.findAllBySensorAndStation(sensorRead.getIdSensor(), sensorRead.getIdStation()).isEmpty() || sensor == null || station == null ) {
+						logger.error("Não foi possivel adicionar a leitura, estação ou sensor não encontrado.");
+			            return new ResponseEntity(new CustomErrorType("Não foi possivel adicionar a leitura, estação ou sensor não encontrado."), HttpStatus.NO_CONTENT);
+					}
 					SensorRead sensorReadSave = new SensorRead(sensorRead.getValue(), new Date(), sensor, station);
 					if(!sensorReadSave.isValid()) {
 						logger.error("Erro nos valores");
@@ -85,7 +93,8 @@ public static final Logger logger = LoggerFactory.getLogger(SensorReadResource.c
 					}
 					persist.add(sensorReadSave);
 				}catch (Exception e ) {
-					logger.error("Ocorreu um erro inesperado");
+					logger.error("Ocorreu um erro inesperado {}", e.getMessage());
+					e.printStackTrace();
 		            return new ResponseEntity(new CustomErrorType("Ocorreu um erro inesperado:"+e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
