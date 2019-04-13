@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.175"
-     inkscape:cx="-1186.5672"
-     inkscape:cy="1034.7789"
+     inkscape:zoom="0.7"
+     inkscape:cx="705.44692"
+     inkscape:cy="751.85222"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1342,12 +1342,220 @@
       </g>
     </g>
     <rect
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
        style="opacity:1;vector-effect:none;fill:#b3b3b3;fill-opacity:0.00913242;fill-rule:evenodd;stroke:#000000;stroke-width:0.82985485;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect4716"
+       id="rect4720"
        width="117.12383"
        height="59.109932"
-       x="-693.55505"
-       y="16.366016"
+       x="223.0372"
+       y="71.172562"
        ry="7.5365381" />
+    <text
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       id="text4724"
+       y="110.59991"
+       x="228.11447"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.77456474px;line-height:1.25;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.59880763"
+       xml:space="preserve"><tspan
+         id="tspan4722"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.59880763"
+         y="110.59991"
+         x="228.11447"
+         sodipodi:role="line">Microcontroler</tspan></text>
+    <rect
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.51099998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4726"
+       width="25.927422"
+       height="19.479317"
+       x="227.25941"
+       y="151.54753"
+       ry="3.7757971" />
+    <flowRoot
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       xml:space="preserve"
+       id="flowRoot4734"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333397px;line-height:1.25;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.21046482,0,0,0.21046482,165.66029,117.44324)"><flowRegion
+         style="fill:#000000"
+         id="flowRegion4730"><rect
+           style="fill:#000000"
+           id="rect4728"
+           width="228.29446"
+           height="121.2183"
+           x="240.41629"
+           y="197.21996" /></flowRegion><flowPara
+         id="flowPara4732"
+         style="font-weight:bold;font-size:16.76184082px;text-align:center;text-anchor:middle;fill:#000000">SENSOR X</flowPara></flowRoot>    <path
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       inkscape:connector-curvature="0"
+       id="path4736"
+       d="m 240.22314,130.29653 v 21.11429"
+       style="fill:none;stroke:#000000;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       ry="3.7757971"
+       y="151.54753"
+       x="258.47852"
+       height="19.479317"
+       width="25.927422"
+       id="rect4738"
+       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.51099998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       transform="matrix(0.21046482,0,0,0.21046482,196.87938,117.44324)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333397px;line-height:1.25;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot4746"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4742"
+         style="fill:#000000"><rect
+           y="197.21996"
+           x="240.41629"
+           height="121.2183"
+           width="228.29446"
+           id="rect4740"
+           style="fill:#000000" /></flowRegion><flowPara
+         style="font-weight:bold;font-size:16.76184082px;text-align:center;text-anchor:middle;fill:#000000"
+         id="flowPara4744">SENSOR Y</flowPara></flowRoot>    <path
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       style="fill:none;stroke:#000000;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 271.44223,130.29653 v 21.11429"
+       id="path4748"
+       inkscape:connector-curvature="0" />
+    <circle
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       r="0.86968702"
+       cy="162.28854"
+       cx="291.17502"
+       id="circle4750"
+       style="fill:#000000;stroke:#000000;stroke-width:0.36814469;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <circle
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       style="fill:#000000;stroke:#000000;stroke-width:0.36814469;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="circle4752"
+       cx="297.35406"
+       cy="162.28854"
+       r="0.86968702" />
+    <circle
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       r="0.86968702"
+       cy="162.28854"
+       cx="303.53311"
+       id="circle4754"
+       style="fill:#000000;stroke:#000000;stroke-width:0.36814469;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       ry="3.7757971"
+       y="151.50235"
+       x="310.10043"
+       height="19.479317"
+       width="25.927422"
+       id="rect4756"
+       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.51099998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <flowRoot
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       transform="matrix(0.21046482,0,0,0.21046482,248.50133,117.39806)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333397px;line-height:1.25;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       id="flowRoot4764"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4760"
+         style="fill:#000000"><rect
+           y="197.21996"
+           x="240.41629"
+           height="121.2183"
+           width="228.29446"
+           id="rect4758"
+           style="fill:#000000" /></flowRegion><flowPara
+         id="flowPara4762"
+         style="font-weight:bold;font-size:16.76184082px;text-align:center;text-anchor:middle;fill:#000000">SENSOR Z</flowPara></flowRoot>    <path
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       style="fill:none;stroke:#000000;stroke-width:0.80000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 323.06407,130.25135 v 21.11429"
+       id="path4766"
+       inkscape:connector-curvature="0" />
+    <g
+       inkscape:export-ydpi="100"
+       inkscape:export-xdpi="100"
+       transform="translate(188.78568,8.7036243)"
+       id="g4780">
+      <rect
+         ry="3.6080236"
+         y="66.961121"
+         x="38.353142"
+         height="18.613775"
+         width="24.775364"
+         id="rect4768"
+         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.48829427;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4778"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333397px;line-height:1.25;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+         transform="matrix(0.21046482,0,0,0.21046482,-23.880592,29.265426)"><flowRegion
+           style="fill:#000000"
+           id="flowRegion4772"><rect
+             style="fill:#000000"
+             id="rect4770"
+             width="228.29446"
+             height="121.2183"
+             x="240.41629"
+             y="197.21996" /></flowRegion><flowPara
+           style="font-weight:bold;font-size:16.76184082px;text-align:center;text-anchor:middle;fill:#000000"
+           id="flowPara4774">BLUETOOTH</flowPara><flowPara
+           style="font-weight:bold;font-size:16.76184082px;text-align:center;text-anchor:middle;fill:#000000"
+           id="flowPara4776">MODULE</flowPara></flowRoot>    </g>
+    <g
+       id="g4794"
+       transform="translate(221.51841,8.7036243)"
+       inkscape:export-xdpi="100"
+       inkscape:export-ydpi="100">
+      <rect
+         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.48829427;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect4782"
+         width="24.775364"
+         height="18.613775"
+         x="38.353142"
+         y="66.961121"
+         ry="3.6080236" />
+      <flowRoot
+         transform="matrix(0.21046482,0,0,0.21046482,-23.880592,29.265426)"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.33333397px;line-height:1.25;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+         id="flowRoot4792"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4786"
+           style="fill:#000000"><rect
+             y="197.21996"
+             x="240.41629"
+             height="121.2183"
+             width="228.29446"
+             id="rect4784"
+             style="fill:#000000" /></flowRegion><flowPara
+           id="flowPara4788"
+           style="font-weight:bold;font-size:16.76184082px;text-align:center;text-anchor:middle;fill:#000000">WIFI</flowPara><flowPara
+           id="flowPara4790"
+           style="font-weight:bold;font-size:16.76184082px;text-align:center;text-anchor:middle;fill:#000000">MODULE</flowPara></flowRoot>    </g>
+    <rect
+       ry="1.6532841"
+       y="115.16779"
+       x="232.51888"
+       height="12.966897"
+       width="94.778465"
+       id="rect4796"
+       style="opacity:1;vector-effect:none;fill:#b3b3b3;fill-opacity:0.00913242;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-xdpi="100"
+       inkscape:export-ydpi="100" />
   </g>
 </svg>
